@@ -1,0 +1,46 @@
+<h1>-</h1>
+<hr>
+
+<table id="booksTable">
+  <tr>
+    <th>Book name</th>
+    <th>Book Author</th>
+    <th>Book ISBN</th>
+    <th># in stock</th>
+    <th></th>
+  </tr>
+  <% @copys.map do |book| %>
+    <% @btitle = "Are you sure you want to delete "+book.Title+"?" %>
+    <tr>
+      <td><%= book.Title %></td>
+      <td><%= book.Author %></td>
+      <td><%= book.ISBN %></td>
+      <td>View stock (To be a button)</td>
+      <td>
+        <ul class="buttonList">
+                    <li style="display:inline-block"><%= button_to "View Book", book, :method => :get %></li>
+          <li style="display:inline-block"><%= button_to "Edit Book", edit_book_path(book), :method => :get %></li>
+          <li style="display:inline-block"><%= button_to "Delete Book", book_path(book), :method => :delete, form: {data: {
+            turbo_confirm: @btitle
+          } }%></li>
+        </ul>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+
+<!--<h1>Add a new book :)</h1>-->
+<%#= form_with model: @book, url: books_path, method: :post, local: true do |f| %>
+
+<!--   Title: <%#= f.text_field :Title %><br>-->
+<!--    Author: <%#= f.text_field :Author %><br>-->
+<!--  ISBN: <%#= f.text_field :ISBN %>-->
+<!--    <br><br><%#= f.submit %>-->
+
+<!--  <%# end %><hr>-->
+
+
+</ul><hr>
+
+<%= button_to "Add new book", new_book_path, :method => :get %>

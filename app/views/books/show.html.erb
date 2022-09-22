@@ -1,0 +1,42 @@
+<h1><%= @book.Title %></h1>
+
+<p><%= @book.Author %></p>
+
+<p><%= @book.ISBN %></p>
+
+<h2>Borrowed Copies</h2>
+<table id="booksTable">
+  <tr>
+    <th>Borrower</th>
+    <th>Due Date</th>
+  </tr>
+  <% @book.copies.each do |copy| %>
+    <tr>
+      <td>
+        <%= copy.Borrower %>
+      </td>
+      <td>
+        <strong>Due date:</strong>
+        <%= copy.DueDate %>
+      </td>
+    </tr>
+  <% end %>
+
+</table>
+
+<h2>Borrow a copy:</h2>
+<%= form_with model: [@book, @book.copies.build] do |form| %>
+  <p>
+    <%= form.label :Name %><br>
+    <%= form.text_field :Borrower %>
+  </p>
+  <p>
+    <%= form.label :Due %><br>
+    <%= form.text_area :DueDate %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
+
+<%= button_to "<- Go back", books_path, :method => :get %>
