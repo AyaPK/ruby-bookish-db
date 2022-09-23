@@ -3,6 +3,16 @@ class BooksController < ApplicationController
 
   def index
     @books = Book.all
+    puts "a"
+    if params[:search_bar_used] && params[:search_bar_used] != ""
+      @books.map do |x|
+        puts params[:search_bar_used]
+      end
+
+      @books = @books.select do |x|
+        x.Title.downcase.include?(params[:search_bar_used].downcase) || x.Author.downcase.include?(params[:search_bar_used].downcase)
+      end
+    end
   end
 
   def show
@@ -46,8 +56,12 @@ class BooksController < ApplicationController
     redirect_to root_path, status: :see_other
   end
 
+  def search
+
+  end
+
   private
   def book_params
-    params.require(:book).permit(:Title, :Author, :ISBN)
+    params.require(:book).permit(:Title, :Author, :ISBN, :cover)
   end
 end

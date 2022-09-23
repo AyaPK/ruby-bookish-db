@@ -3,7 +3,6 @@ Rails.application.routes.draw do
 
   root 'books#index'
   get 'booksIndex', to: 'books#index', as: 'booksIndex'
-  # get 'copiesIndex', to: 'copies#index', as: 'copiesIndex'
   resources :books do
     resources :copies
   end

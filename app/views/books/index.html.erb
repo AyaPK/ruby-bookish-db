@@ -1,18 +1,34 @@
 
 <ul>
-  <li style="display:inline-block"><%= button_to "Add new book", new_book_path, :method => :get %></li>
-  <li style="display:inline-block"><%= button_to "My Borrowed Books", new_book_path, :method => :get %></li>
+  <% if user_signed_in? %>
+    <li style="display:inline-block"><%= button_to "My Borrowed Books", copies_path, :method => :get %></li>
+    <% if current_user.email == "admin@bookish.com" %>
+      <li style="display:inline-block"><%= button_to "Add new book", new_book_path, :method => :get %></li>
+
+<% end %>
+  <% end %>
+
+  <div class="topnav">
+    <div class="search-container">
+      <%= form_tag root_path, method: "GET" do %><ul>
+          <li style="display:inline-block">
+            <%= text_field_tag :search_bar_used, params[:search_bar_used] %></li>
+          <li style="display:inline-block"><button type="submit">🔎</button></li>
+        </ul>
+        <% end %>
+    </div>
+  </div>
+  <hr>
 </ul>
 
 
-<hr>
 
 <table id="booksTable">
 <tr>
   <th>Book name</th>
   <th>Book Author</th>
   <th>Book ISBN</th>
-<!--  <th># in stock</th>-->
+  <th></th>
   <th></th>
 </tr>
   <% @books.sort_by { |x| x['Title'] }.map do |book| %>
@@ -21,7 +37,13 @@
       <td><%= book.Title %></td>
       <td><%= book.Author %></td>
       <td><%= book.ISBN %></td>
-<!--      <td>View stock (To be a button)</td>-->
+
+      <% if book.cover.attached? %>
+        <td><image src="<%= (url_for(book.cover)) %>" style="width: 100px;"></image></td>
+      <% else %>
+      <td>No image</td>
+        <% end %>
+
       <td>
         <ul class="buttonList">
           <li style="display:inline-block"><%= button_to "View Book", book, :method => :get %></li>

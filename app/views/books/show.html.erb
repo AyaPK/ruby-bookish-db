@@ -48,7 +48,7 @@
     <%= form.hidden_field :DueDate, :value => "TBA" %>
   </p>
   <p>
-    <%= form.submit :value => "Borrow a copy of this book", :id => "borrowButton" %>
+    <%= form.submit :value => "Borrow a copies of this book", :id => "borrowButton" %>
   </p>
       <% end %>
 <% else %>
@@ -64,3 +64,7 @@
   <% end %>
 <hr>
 <%= button_to "<- Go back", books_path, :method => :get %>
+
+<% if @book.cover.attached? %>
+  <image src="<%= (url_for(@book.cover)) %>" style="width: 100px;"></image>
+<% end %>
