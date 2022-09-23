@@ -17,12 +17,12 @@
 
 #mainHeader {
     text-decoration: none;
-    color: #fff;
+    color: rgba(213, 213, 213, 0.87);
 }
 
 body {
-    background: #000;
-    color: #fff;
+    background: #121212;
+    color: rgba(213, 213, 213, 0.87);
     font-family: Calibri, sans-serif;
 
 }
@@ -43,7 +43,6 @@ input[type=text], select {
 }
 
 input[type=submit] {
-    width: 100%;
     background-color: #5e257d;
     color: #dadada;
     padding: 14px 20px;
@@ -53,6 +52,21 @@ input[type=submit] {
     cursor: pointer;
     font-weight: bold;
 }
+
+#newBookSubmit {
+    width: 100%;
+}
+
+/*#borrowedBook {*/
+/*    background-color: #5e257d;*/
+/*    color: #dadada;*/
+/*    padding: 14px 20px;*/
+/*    margin: 8px 0;*/
+/*    border: none;*/
+/*    border-radius: 4px;*/
+/*    cursor: pointer;*/
+/*    font-weight: bold;*/
+/*}*/
 
 input[type=submit]:hover {
     background-color: #3d1957;
@@ -68,7 +82,7 @@ input[type=submit]:hover {
 #booksTable {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    width: 50%;
+    /*width: 70%;*/
 }
 
 #booksTable td, #customers th {
@@ -76,24 +90,32 @@ input[type=submit]:hover {
     padding: 8px;
 }
 
-#booksTable tr:nth-child(even){background-color: #3f3f3f;}
+#booksTable tr:nth-child(even){background-color: #262626;}
 
-#booksTable tr:hover {background-color: #282828;}
+#booksTable tr:hover {background-color: #493b49;}
 
 #booksTable th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
     background-color: #5e257d;
-    color: white;
+    color: rgba(213, 213, 213, 0.87);
 }
 
-#loginButton {
+Button {
     background-color: #5e257d;
-    color: white;
+    color: rgba(213, 213, 213, 0.87);
     padding: 14px 20px;
     border: none;
     cursor: pointer;
+    margin: 8px 20px 8px 0;
+}
+
+Button:hover {
+    background-color: #3d1957;
+}
+
+#loginButton {
     float: right;
     margin: 8px 20px 8px 0;
 }

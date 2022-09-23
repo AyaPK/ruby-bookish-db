@@ -3,14 +3,15 @@
 <p><%= @book.Author %></p>
 
 <p><%= @book.ISBN %></p>
-
+<% if user_signed_in? %>
+  <% if current_user.email == "admin@bookish.com" %>
 <h2>Borrowed Copies</h2>
 <table id="booksTable">
   <tr>
     <th>Borrower</th>
     <th>Due Date</th>
   </tr>
-  <% @book.copies.each do |copy| %>
+  <% @book.copies.map do |copy| %>
     <tr>
       <td>
         <%= copy.Borrower %>
@@ -20,23 +21,46 @@
         <%= copy.DueDate %>
       </td>
     </tr>
+    <% end %>
   <% end %>
-
+  <% end %>
+<hr>
 </table>
 
+<% if user_signed_in? %>
+
+  <% @borrowed = false
+    if @book.copies.map do |copy|
+      if copy.Borrower == current_user.email
+        @borrowed = true
+        break
+      end
+    end
+  end %>
+
+  <% unless @borrowed %>
 <h2>Borrow a copy:</h2>
 <%= form_with model: [@book, @book.copies.build] do |form| %>
   <p>
-    <%= form.label :Name %><br>
-    <%= form.text_field :Borrower %>
+    <%= form.hidden_field :Borrower, :value => current_user.email %>
   </p>
   <p>
-    <%= form.label :Due %><br>
-    <%= form.text_area :DueDate %>
+    <%= form.hidden_field :DueDate, :value => "TBA" %>
   </p>
   <p>
-    <%= form.submit %>
+    <%= form.submit :value => "Borrow a copy of this book", :id => "borrowButton" %>
   </p>
-<% end %>
+      <% end %>
+<% else %>
+    <hr>
+    You have borrowed a copy of this book already: Due date TBA
+    <br>
+    (return book button here)
+    <% end %>
 
+  <% else %>
+  <hr>
+  <%= button_to "Log in or sign up to borrow this book", new_user_session_path, :method => :get %>
+  <% end %>
+<hr>
 <%= button_to "<- Go back", books_path, :method => :get %>

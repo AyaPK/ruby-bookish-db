@@ -1,15 +1,15 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { registrations: "registrations" }
+
   root 'books#index'
   get 'booksIndex', to: 'books#index', as: 'booksIndex'
+  # get 'copiesIndex', to: 'copies#index', as: 'copiesIndex'
   resources :books do
     resources :copies
   end
+  resources :copies
 
-  # get 'books', to: 'books#index', as: 'books'
-  # post 'books', to: 'books#add'
-  # get 'books/add', to: 'books#add', as: 'add_book'
-  # get 'books/:id', to: 'books#show', as: 'book'
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
 

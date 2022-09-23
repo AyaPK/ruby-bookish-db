@@ -15,6 +15,8 @@ class BooksController < ApplicationController
 
   def create
     @book = Book.new(book_params)
+    @book.Title = @book.Title.split.map { |x| x.capitalize }.join(" ")
+    @book.Author = @book.Author.split.map { |x| x.capitalize }.join(" ")
 
     if @book.save
       redirect_to books_path
