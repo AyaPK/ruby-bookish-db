@@ -6,6 +6,8 @@ ruby "3.1.2"
 gem "bootstrap", "~> 5.0"
 gem "bootstrap_form", "~> 5.1"
 gem "devise"
+gem "figaro"
+gem "httparty"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4"

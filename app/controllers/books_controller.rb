@@ -1,8 +1,9 @@
+require 'httparty'
 class BooksController < ApplicationController
   # before_action :authenticate_user!
 
   def index
-    @books = Book.all
+        @books = Book.all
     puts "a"
     if params[:search_bar_used] && params[:search_bar_used] != ""
       @books.map do |x|
@@ -20,11 +21,17 @@ class BooksController < ApplicationController
   end
 
   def new
+    if params[:google_book_search] && params[:google_book_search] != ""
+      url = "https://www.googleapis.com/books/v1/volumes?q=#{params[:google_book_search]}&maxResults=15&key=#{ENV["GOOGLE_API_KEY"]}"
+      response = HTTParty.get(url)
+      @results = response.parsed_response
+    end
     @book = Book.new
   end
 
   def create
     @book = Book.new(book_params)
+
     @book.Title = @book.Title.split.map { |x| x.capitalize }.join(" ")
     @book.Author = @book.Author.split.map { |x| x.capitalize }.join(" ")
 
@@ -62,6 +69,6 @@ class BooksController < ApplicationController
 
   private
   def book_params
-    params.require(:book).permit(:Title, :Author, :ISBN, :cover)
+    params.require(:book).permit(:Title, :Author, :ISBN, :cover, :imageUrl)
   end
 end

@@ -2,4 +2,71 @@
 
 <%= render "form", book: @book %>
 
+<h2>Or search for a book to add!</h2>
+<%= form_tag new_book_path, method: "GET" do %>
+  <ul>
+    <li style="display:inline-block">
+      <%= text_field_tag :google_book_search, params[:google_book_search] %></li>
+    <li style="display:inline-block">
+      <button type="submit">🔎</button>
+    </li>
+  </ul>
+<% end %>
+
+<table id="booksTable">
+  <tr>
+    <th>Book name</th>
+    <th>Author</th>
+    <th>ISBN</th>
+    <th></th>
+  </tr>
+  <% if @results %>
+    <% @results["items"].map do |x| %>
+      <% if x["volumeInfo"]["title"] %>
+        <%# puts x %>
+        <tr>
+          <td><%= x["volumeInfo"]["title"] %> </td>
+          <% if x["volumeInfo"]["authors"] %>
+            <td><%= x["volumeInfo"]["authors"].join(",") %> </td>
+          <% else %>
+            <td></td>
+          <% end %>
+          <% if x["volumeInfo"]["industryIdentifiers"] %>
+            <td><%= x["volumeInfo"]["industryIdentifiers"][0]["identifier"] %> </td>
+          <% end %>
+          <td>
+            <%= form_with model: @book do |f| %>
+
+              <%= f.hidden_field :Title, :value =>  x["volumeInfo"]["title"]%>
+              <% if x["volumeInfo"]["authors"] %>
+              <%= f.hidden_field :Author, :value => x["volumeInfo"]["authors"].join(",") %>
+              <% else %>
+              <td></td>
+              <% end %>
+            <% if x["volumeInfo"]["industryIdentifiers"] %>
+              <%= f.hidden_field :ISBN, :value => x["volumeInfo"]["industryIdentifiers"][0]["identifier"] %>
+              <%else %>
+              <td></td>
+              <% end %>
+              <% if x["volumeInfo"]["imageLinks"] %>
+              <%= f.hidden_field :imageUrl, :value => x["volumeInfo"]["imageLinks"]["thumbnail"] %>
+              <% end %>
+              <br>
+              <%= f.submit :id => "newBookSubmit", :value => "Add this book" %>
+
+
+            <% end %>
+          </td>
+          <td>
+            <% if x["volumeInfo"]["imageLinks"] %>
+              <image src="<%= x["volumeInfo"]["imageLinks"]["thumbnail"] %>" style="width: 100px;"></image>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  <% end %>
+</table>
+
+<hr>
 <%= button_to "<- Go back", books_path, :method => :get %>

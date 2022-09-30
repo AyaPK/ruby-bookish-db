@@ -23,6 +23,6 @@ class CopiesController < ApplicationController
 
   private
   def comment_params
-    params.require(:copy).permit(:Borrower, :DueDate)
+    params.require(:copy).permit(:Borrower, :DueDate, :user_id)
   end
 end

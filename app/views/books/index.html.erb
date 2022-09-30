@@ -40,6 +40,8 @@
 
       <% if book.cover.attached? %>
         <td><image src="<%= (url_for(book.cover)) %>" style="width: 100px;"></image></td>
+      <% elsif book.imageUrl %>
+        <td><image src="<%= book.imageUrl %>" style="width: 100px;"></image></td>
       <% else %>
       <td>No image</td>
         <% end %>

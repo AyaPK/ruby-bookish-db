@@ -1,35 +1,62 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Bookish</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>📕 A Novel Idea (Ruby Bootcamp | Bookish)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
-
-  <body>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+  <%= javascript_include_tag "application" %>
 
 
-  <ul>
-    <li style="display:inline-block"><h1><%= link_to "A Novel Website", root_path, :id => "mainHeader" %></h1></li>
-    <li style="display:inline-block"></li>
-    <% unless user_signed_in? %>
+</head>
+
+<body>
+
+
+<ul>
+  <li style="display:inline-block"><h1><%= link_to "📚 A Novel Idea", root_path, :id => "mainHeader" %></h1></li>
+  <li style="display:inline-block"></li>
+  <% unless user_signed_in? %>
     <li style="display:inline-block; float: right;"> <%= button_to "Log In or Sign Up", new_user_session_path, :method => :get, :id => "loginButton" %></li>
-    <% else %>
-      <li style="display:inline-block; float: right;"><%= button_to(
-            "Log Out",
-            destroy_user_session_path,
-            method: :delete,
-            :id => "loginButton"
-          ) %>
-      <li style="display:inline-block; float: right; margin-top: 20px;"> Currently logged in as <b><%= current_user.email %></b> </li>
+  <% else %>
+    <div class="dropdown" style="display:inline-block; float: right;">
+      <button class="dropdownButton" onclick="myFunction()">
+        <img src="https://i.imgur.com/uaWh1Kb.png" class="profile-circle"/>
+      </button>
+      <div id="myDropdown" class="dropdown-content">
+        <%= button_to("Account",
+                      current_user,
+                      method: :get, :class => "menuButton") %>
+        <%= button_to("Log Out",
+                      destroy_user_session_path,
+                      method: :delete, :class => "menuButton") %>
+      </div>
+    </div>
+    <li style="display:inline-block; float: right; margin-top: 20px;"> Currently logged in as
+      <b><%= current_user.email %></b></li>
   <% end %></li>
 
-  </ul>
-  <hr>
-    <%= yield %>
-  </body>
+</ul>
+<hr>
+<%= yield %>
+</body>
+
+<script>
+    /* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+    function myFunction() {
+
+        if (document.getElementById("myDropdown").classList.contains('show')) {
+            document.getElementById("myDropdown").classList.remove('show');
+        } else {
+            document.getElementById("myDropdown").classList.add('show');
+        }
+    }
+
+
+</script>
 </html>
+

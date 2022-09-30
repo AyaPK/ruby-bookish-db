@@ -41,16 +41,11 @@
   <% unless @borrowed %>
 <h2>Borrow a copy:</h2>
 <%= form_with model: [@book, @book.copies.build] do |form| %>
-  <p>
-    <%= form.hidden_field :Borrower, :value => current_user.email %>
-  </p>
-  <p>
-    <%= form.hidden_field :DueDate, :value => "TBA" %>
-  </p>
-  <p>
-    <%= form.submit :value => "Borrow a copies of this book", :id => "borrowButton" %>
-  </p>
-      <% end %>
+      <%= form.hidden_field :Borrower, :value => current_user.email %>
+      <%= form.hidden_field :DueDate, :value => "TBA" %>
+      <%= form.hidden_field :user_id, :value => current_user.id %>
+      <%= form.submit :value => "Borrow a copy of this book", :id => "borrowButton" %>
+    <% end %>
 <% else %>
     <hr>
     You have borrowed a copy of this book already: Due date TBA

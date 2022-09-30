@@ -6,3 +6,4 @@ class Book < ApplicationRecord
   validates :Author, presence: true
   validates :ISBN, presence: true
 end
+

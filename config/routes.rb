@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { registrations: "registrations" }
+  devise_for :users, :controllers => { registrations: 'users/registrations' }
 
   root 'books#index'
   get 'booksIndex', to: 'books#index', as: 'booksIndex'
   resources :books do
+    resources :copies
+  end
+  resources :users do
     resources :copies
   end
   resources :copies
